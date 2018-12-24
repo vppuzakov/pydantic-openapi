@@ -25,7 +25,7 @@ class OpenAPIGenerator:
         spec = spec_from_file_location(module_name, module_path)
         module = module_from_spec(spec)
         spec.loader.exec_module(module)
-        for model_name in module.__all__:
+        for model_name in dir(module):
             model = getattr(module, model_name)
             swagger = self.model_to_swagger(model, model_name)
             self.specs[model_name] = swagger

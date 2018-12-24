@@ -1,18 +1,24 @@
-from typing import Optional
-from uuid import UUID
+from datetime import datetime
+from enum import Enum
 
 from pydantic import BaseModel
 
-__all__ = ['User', 'Photo']
+from doc.examples.user import User
+
+__all__ = ['Email', 'Customer']
 
 
-class Photo(BaseModel):
-    uid: UUID
-    title: str
+class Email(BaseModel):
+    is_primary: bool = True
+    email: str
 
 
-class User(BaseModel):
-    username: str
-    uid: UUID
-    name: Optional[str]
-    photo: Optional[Photo]
+class CustomerCategory(str, Enum):
+    vip = "vip"
+    common = "common"
+
+
+class Customer(BaseModel):
+    user: User
+    category: CustomerCategory
+    created: datetime
